@@ -3,140 +3,81 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>DesiWorkout - Realistic Muscle Map</title>
-<link rel="stylesheet" href="style.css" />
+<title>DesiWorkout - Real Body Map</title>
 <style>
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 20px;
-    background: #f9f9f9;
-    color: #222;
+  body { font-family: Arial, sans-serif; max-width: 800px; margin: 20px auto; }
+  h1 { text-align: center; }
+  #bodyImage {
+    position: relative;
+    max-width: 300px;
+    margin: 0 auto;
   }
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  #darkModeToggle {
-    cursor: pointer;
-    background: #333;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    font-size: 16px;
-  }
-  .body-map-container {
-    max-width: 500px;
-    margin: 20px auto;
-  }
-  svg {
+  #bodyImage img {
     width: 100%;
-    height: auto;
+    display: block;
+  }
+  .spot {
+    position: absolute;
+    background: rgba(255, 99, 71, 0.7);
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
     cursor: pointer;
+    border: 2px solid white;
   }
-  .muscle {
-    fill: #ddd;
-    stroke: #555;
-    stroke-width: 1.2;
-    transition: fill 0.3s;
+  #workoutList {
+    margin-top: 20px;
+    background: #f4f4f4;
+    padding: 15px;
+    border-radius: 10px;
+    min-height: 100px;
   }
-  .muscle:hover {
-    fill: #ff6347;
-  }
-  .selected {
-    fill: #ff4500 !important;
-  }
-  .workout-list {
-    max-width: 600px;
-    margin: 20px auto;
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 0 15px #ccc;
-    min-height: 160px;
-  }
-  .dark-mode {
-    background: #121212;
-    color: #eee;
-  }
-  .dark-mode .workout-list {
-    background: #222;
-    box-shadow: 0 0 15px #444;
-  }
-  .dark-mode #darkModeToggle {
-    background: #eee;
-    color: #121212;
-  }
-  .dark-mode .muscle {
-    fill: #444;
-    stroke: #ccc;
-  }
-  .dark-mode .muscle:hover {
-    fill: #ff6347;
-  }
-  .dark-mode .selected {
-    fill: #ff4500 !important;
+  input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
   }
 </style>
 </head>
 <body>
-<header>
-  <h1>DesiWorkout</h1>
-  <button id="darkModeToggle">🌙 Dark Mode</button>
-</header>
+<h1>DesiWorkout - Real Body Map</h1>
 
-<div class="body-map-container">
-  <svg id="muscleMap" viewBox="0 0 600 1200" xmlns="http://www.w3.org/2000/svg" aria-label="Muscle Map" role="img">
-    <!-- Head -->
-    <ellipse id="neck" class="muscle" cx="300" cy="120" rx="40" ry="50" />
-    <circle id="head" class="muscle" cx="300" cy="50" r="50" />
-    
-    <!-- Shoulders -->
-    <path id="shoulders" class="muscle" d="M180 180 C230 130, 370 130, 420 180 L420 250 L180 250 Z" />
-    
-    <!-- Chest -->
-    <path id="chest" class="muscle" d="M220 250 C250 350, 350 350, 380 250 L380 380 L220 380 Z" />
-    
-    <!-- Upper Chest -->
-    <path id="upperChest" class="muscle" d="M230 230 C270 280, 330 280, 370 230 L370 250 L230 250 Z" />
-    
-    <!-- Biceps Left -->
-    <ellipse id="biceps" class="muscle" cx="170" cy="320" rx="40" ry="80" />
-    <!-- Triceps Right -->
-    <ellipse id="triceps" class="muscle" cx="430" cy="320" rx="40" ry="80" />
-    
-    <!-- Forearms Left -->
-    <rect id="forearms" class="muscle" x="130" y="380" width="80" height="150" rx="30" ry="40"/>
-    <!-- Forearms Right -->
-    <rect id="forearmsRight" class="muscle" x="390" y="380" width="80" height="150" rx="30" ry="40"/>
-    
-    <!-- Abs -->
-    <rect id="abs" class="muscle" x="250" y="380" width="100" height="160" rx="35" ry="35"/>
-    
-    <!-- Obliques Left -->
-    <path id="obliques" class="muscle" d="M210 380 L250 450 L210 540 L180 500 Z" />
-    <!-- Obliques Right -->
-    <path id="obliquesRight" class="muscle" d="M450 380 L410 450 L450 540 L480 500 Z" />
-    
-    <!-- Glutes -->
-    <ellipse id="glutes" class="muscle" cx="300" cy="600" rx="90" ry="70" />
-    
-    <!-- Legs Left -->
-    <rect id="legs" class="muscle" x="210" y="670" width="70" height="320" rx="40" ry="40" />
-    <!-- Legs Right -->
-    <rect id="legsRight" class="muscle" x="320" y="670" width="70" height="320" rx="40" ry="40" />
-    
-    <!-- Calves Left -->
-    <ellipse id="calves" class="muscle" cx="240" cy="1000" rx="40" ry="60" />
-    <!-- Calves Right -->
-    <ellipse id="calvesRight" class="muscle" cx="350" cy="1000" rx="40" ry="60" />
-  </svg>
+<input type="text" id="searchInput" placeholder="Search muscle..." />
+
+<div id="bodyImage">
+  <img src="https://i.ibb.co/2SZLDX3/human-body-front.png" alt="Human Body Front" />
+  <!-- Neck spot -->
+  <div class="spot" data-muscle="neck" style="top: 10%; left: 48%;"></div>
+  <!-- Shoulders -->
+  <div class="spot" data-muscle="shoulders" style="top: 18%; left: 35%;"></div>
+  <div class="spot" data-muscle="shoulders" style="top: 18%; left: 62%;"></div>
+  <!-- Biceps -->
+  <div class="spot" data-muscle="biceps" style="top: 30%; left: 28%;"></div>
+  <div class="spot" data-muscle="biceps" style="top: 30%; left: 68%;"></div>
+  <!-- Triceps -->
+  <div class="spot" data-muscle="triceps" style="top: 35%; left: 25%;"></div>
+  <div class="spot" data-muscle="triceps" style="top: 35%; left: 72%;"></div>
+  <!-- Chest -->
+  <div class="spot" data-muscle="chest" style="top: 30%; left: 50%;"></div>
+  <!-- Abs -->
+  <div class="spot" data-muscle="abs" style="top: 45%; left: 50%;"></div>
+  <!-- Forearms -->
+  <div class="spot" data-muscle="forearms" style="top: 50%; left: 25%;"></div>
+  <div class="spot" data-muscle="forearms" style="top: 50%; left: 70%;"></div>
+  <!-- Back -->
+  <div class="spot" data-muscle="back" style="top: 40%; left: 50%;"></div>
+  <!-- Legs -->
+  <div class="spot" data-muscle="legs" style="top: 70%; left: 45%;"></div>
+  <!-- Calves -->
+  <div class="spot" data-muscle="calves" style="top: 85%; left: 45%;"></div>
 </div>
 
-<section id="workoutList" class="workout-list">
-  <h2>Click on any muscle above to see workouts</h2>
-</section>
+<div id="workoutList">
+  <h2>Click on a muscle spot or search above to see workouts</h2>
+</div>
 
 <script>
   const workouts = {
@@ -175,26 +116,12 @@
       "Decline pushups (hands elevated)",
       "Super slow pushups"
     ],
-    upperChest: [
-      "Incline pushups",
-      "Wall pushups",
-      "Dumbbell front raises",
-      "Pike pushups",
-      "Clap pushups"
-    ],
     abs: [
       "Situps",
       "Leg raises",
       "Mountain climbers",
       "Bicycle crunches",
       "Plank"
-    ],
-    obliques: [
-      "Side planks",
-      "Russian twists",
-      "Side crunches",
-      "Heel taps",
-      "Woodchoppers"
     ],
     forearms: [
       "Bucket hold",
@@ -209,20 +136,6 @@
       "Towel pull simulation",
       "Loaded bag bent-over row",
       "Reverse dand (arching pushup style)"
-    ],
-    lowerBack: [
-      "Bird-dog",
-      "Bridge pose",
-      "Superman raise",
-      "Back extensions",
-      "Cat-cow stretch"
-    ],
-    glutes: [
-      "Glute bridges",
-      "Squats",
-      "Lunges",
-      "Donkey kicks",
-      "Step-ups"
     ],
     legs: [
       "Hindu squats (Desi Baithak)",
@@ -241,23 +154,16 @@
   };
 
   const workoutList = document.getElementById("workoutList");
-  const muscles = document.querySelectorAll(".muscle");
-  let selectedMuscle = null;
+  const spots = document.querySelectorAll(".spot");
+  const searchInput = document.getElementById("searchInput");
 
   function showWorkouts(muscle) {
-    if (selectedMuscle) {
-      selectedMuscle.classList.remove("selected");
-    }
-    selectedMuscle = document.getElementById(muscle);
-    selectedMuscle.classList.add("selected");
-
     const list = workouts[muscle];
     if (!list) {
       workoutList.innerHTML = "<h2>No workouts found for this muscle.</h2>";
       return;
     }
-
-    let html = `<h2>${muscle.replace(/([A-Z])/g, ' $1').toUpperCase()} Workouts</h2><ul>`;
+    let html = `<h2>${muscle.toUpperCase()} Workouts</h2><ul>`;
     for (let w of list) {
       html += `<li>${w}</li>`;
     }
@@ -265,22 +171,34 @@
     workoutList.innerHTML = html;
   }
 
-  muscles.forEach(muscle => {
-    muscle.addEventListener("click", () => {
-      showWorkouts(muscle.id);
+  spots.forEach(spot => {
+    spot.addEventListener("click", () => {
+      const muscle = spot.getAttribute("data-muscle");
+      showWorkouts(muscle);
     });
   });
 
-  const darkModeToggle = document.getElementById("darkModeToggle");
-  darkModeToggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark-mode");
-    if(document.body.classList.contains("dark-mode")) {
-      darkModeToggle.textContent = "☀️ Light Mode";
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.trim().toLowerCase();
+    if (!query) {
+      workoutList.innerHTML = "<h2>Click on a muscle spot or search above to see workouts</h2>";
+      return;
+    }
+    let foundMuscle = null;
+    for (let muscle in workouts) {
+      if (muscle.includes(query)) {
+        foundMuscle = muscle;
+        break;
+      }
+    }
+    if (foundMuscle) {
+      showWorkouts(foundMuscle);
     } else {
-      darkModeToggle.textContent = "🌙 Dark Mode";
+      workoutList.innerHTML = "<h2>No muscle found for your search.</h2>";
     }
   });
 </script>
 </body>
 </html>
+
 
