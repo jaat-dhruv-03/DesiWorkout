@@ -1,26 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Desi Workout</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DesiWorkout - Home</title>
+<link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>🏋️ Desi Workout - Full Body Guide</h1>
-  <p>Click any body part to see desi-style workouts:</p>
-  <ul>
-    <li><a href="Neck.html">Neck</a></li>
-    <li><a href="Shoulder.html">Shoulders</a></li>
-    <li><a href="Biceps.html">Biceps</a></li>
-    <li><a href="Triceps.html">Triceps</a></li>
-    <li><a href="Chest.html">Chest</a></li>
-    <li><a href="Abs.html">Abs</a></li>
-    <li><a href="Forearms.html">Forearms</a></li>
-    <li><a href="Back.html">Back</a></li>
-    <li><a href="Legs.html">Legs</a></li>
-    <li><a href="Calves.html">Calves</a></li>
-  </ul>
+<header>
+  <h1>DesiWorkout</h1>
+  <button id="darkModeToggle">🌙 Dark Mode</button>
+</header>
+
+<section class="search-section">
+  <input type="text" id="searchInput" placeholder="Search workouts or body parts..." />
+</section>
+
+<section class="body-map">
+  <!-- Simple SVG body outline with clickable parts -->
+  <svg viewBox="0 0 200 400" width="300" height="600" id="bodyMap">
+    <!-- Define body parts as clickable areas -->
+    <path id="neck" class="body-part" d="M90 10 L110 10 L110 40 L90 40 Z" />
+    <path id="shoulders" class="body-part" d="M50 40 L150 40 L150 80 L50 80 Z" />
+    <path id="biceps" class="body-part" d="M30 80 L50 80 L50 130 L30 130 Z" />
+    <path id="triceps" class="body-part" d="M150 80 L170 80 L170 130 L150 130 Z" />
+    <path id="chest" class="body-part" d="M60 80 L140 80 L140 140 L60 140 Z" />
+    <path id="upper-chest" class="body-part" d="M70 50 L130 50 L130 80 L70 80 Z" />
+    <path id="abs" class="body-part" d="M80 140 L120 140 L120 190 L80 190 Z" />
+    <path id="obliques" class="body-part" d="M50 140 L80 140 L80 190 L50 190 Z M120 140 L150 140 L150 190 L120 190 Z" />
+    <path id="forearms" class="body-part" d="M20 130 L30 130 L30 190 L20 190 Z M170 130 L180 130 L180 190 L170 190 Z" />
+    <path id="back" class="body-part" d="M60 190 L140 190 L140 250 L60 250 Z" />
+    <path id="lower-back" class="body-part" d="M80 250 L120 250 L120 290 L80 290 Z" />
+    <path id="glutes" class="body-part" d="M60 290 L140 290 L140 330 L60 330 Z" />
+    <path id="legs" class="body-part" d="M60 330 L140 330 L140 390 L60 390 Z" />
+    <path id="calves" class="body-part" d="M40 390 L60 390 L60 420 L40 420 Z M140 390 L160 390 L160 420 L140 420 Z" />
+  </svg>
+</section>
+
+<section id="workoutList" class="workout-list">
+  <h2>Click on a body part above to see workouts</h2>
+</section>
+
+<script src="script.js"></script>
 </body>
 </html>
-
-
-
