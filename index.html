@@ -1,204 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>DesiWorkout - Real Body Map</title>
-<style>
-  body { font-family: Arial, sans-serif; max-width: 800px; margin: 20px auto; }
-  h1 { text-align: center; }
-  #bodyImage {
-    position: relative;
-    max-width: 300px;
-    margin: 0 auto;
-  }
-  #bodyImage img {
-    width: 100%;
-    display: block;
-  }
-  .spot {
-    position: absolute;
-    background: rgba(255, 99, 71, 0.7);
-    border-radius: 50%;
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
-    border: 2px solid white;
-  }
-  #workoutList {
-    margin-top: 20px;
-    background: #f4f4f4;
-    padding: 15px;
-    border-radius: 10px;
-    min-height: 100px;
-  }
-  input[type="text"] {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
-    font-size: 16px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DesiWorkout - Muscle Map</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    header {
+      background-color: #222;
+      color: #fff;
+      padding: 1rem;
+    }
+    #searchInput {
+      margin-top: 10px;
+      padding: 8px;
+      width: 60%;
+      max-width: 400px;
+    }
+    .body-image {
+      width: 90%;
+      max-width: 600px;
+      margin: 20px auto;
+      display: block;
+    }
+    #workoutList {
+      margin: 20px auto;
+      padding: 20px;
+      background-color: white;
+      width: 90%;
+      max-width: 600px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+  </style>
 </head>
 <body>
-<h1>DesiWorkout - Real Body Map</h1>
+  <header>
+    <h1>DesiWorkout</h1>
+    <input type="text" id="searchInput" placeholder="Search workouts..." />
+  </header>
 
-<input type="text" id="searchInput" placeholder="Search muscle..." />
+  <main>
+    <section id="imageSection">
+      <img src="assets/front.png" usemap="#frontmap" alt="Front Body" class="body-image" />
+      <map name="frontmap">
+        <area shape="rect" coords="110,130,160,180" alt="Chest" onclick="showWorkouts('chest')" />
+        <area shape="rect" coords="120,190,160,230" alt="Abs" onclick="showWorkouts('abs')" />
+        <!-- Add more mapped regions as needed -->
+      </map>
 
-<div id="bodyImage">
-  <img src="https://i.ibb.co/2SZLDX3/human-body-front.png" alt="Human Body Front" />
-  <!-- Neck spot -->
-  <div class="spot" data-muscle="neck" style="top: 10%; left: 48%;"></div>
-  <!-- Shoulders -->
-  <div class="spot" data-muscle="shoulders" style="top: 18%; left: 35%;"></div>
-  <div class="spot" data-muscle="shoulders" style="top: 18%; left: 62%;"></div>
-  <!-- Biceps -->
-  <div class="spot" data-muscle="biceps" style="top: 30%; left: 28%;"></div>
-  <div class="spot" data-muscle="biceps" style="top: 30%; left: 68%;"></div>
-  <!-- Triceps -->
-  <div class="spot" data-muscle="triceps" style="top: 35%; left: 25%;"></div>
-  <div class="spot" data-muscle="triceps" style="top: 35%; left: 72%;"></div>
-  <!-- Chest -->
-  <div class="spot" data-muscle="chest" style="top: 30%; left: 50%;"></div>
-  <!-- Abs -->
-  <div class="spot" data-muscle="abs" style="top: 45%; left: 50%;"></div>
-  <!-- Forearms -->
-  <div class="spot" data-muscle="forearms" style="top: 50%; left: 25%;"></div>
-  <div class="spot" data-muscle="forearms" style="top: 50%; left: 70%;"></div>
-  <!-- Back -->
-  <div class="spot" data-muscle="back" style="top: 40%; left: 50%;"></div>
-  <!-- Legs -->
-  <div class="spot" data-muscle="legs" style="top: 70%; left: 45%;"></div>
-  <!-- Calves -->
-  <div class="spot" data-muscle="calves" style="top: 85%; left: 45%;"></div>
-</div>
+      <img src="assets/back.png" usemap="#backmap" alt="Back Body" class="body-image" />
+      <map name="backmap">
+        <area shape="rect" coords="100,140,150,180" alt="Back" onclick="showWorkouts('back')" />
+        <area shape="rect" coords="110,210,150,250" alt="Glutes" onclick="showWorkouts('glutes')" />
+        <!-- Add more mapped regions as needed -->
+      </map>
+    </section>
 
-<div id="workoutList">
-  <h2>Click on a muscle spot or search above to see workouts</h2>
-</div>
+    <section id="workoutList">
+      <h2>Select a muscle to view DesiWorkout exercises</h2>
+    </section>
+  </main>
 
-<script>
-  const workouts = {
-    neck: [
-      "Neck rotations",
-      "Front and back neck resistance using hands",
-      "Side neck resistance using hands",
-      "Towel neck pulls",
-      "Pillow neck hold (lying down with a pillow under head)"
-    ],
-    shoulders: [
-      "Wide-arm desi pushups (Hanuman Dand)",
-      "Traditional shoulder-focused dand",
-      "Bag front raises",
-      "Water bottle lateral raises",
-      "Wall handstand hold"
-    ],
-    biceps: [
-      "Reverse-hand pushups",
-      "Towel bucket curls",
-      "Chin-ups (if you have a bar)",
-      "Heavy bottle curls",
-      "Brick hammer curls"
-    ],
-    triceps: [
-      "Diamond pushups",
-      "Chair or table dips",
-      "Overhead towel extension with weight",
-      "Close-grip pushups",
-      "One-arm wall tricep push"
-    ],
-    chest: [
-      "Normal desi pushups",
-      "Wide grip pushups",
-      "Elevated pushups (feet up)",
-      "Decline pushups (hands elevated)",
-      "Super slow pushups"
-    ],
-    abs: [
-      "Situps",
-      "Leg raises",
-      "Mountain climbers",
-      "Bicycle crunches",
-      "Plank"
-    ],
-    forearms: [
-      "Bucket hold",
-      "Wet towel twist",
-      "Brick wrist curls",
-      "Wrist pushups",
-      "Hand grip using towel or ball"
-    ],
-    back: [
-      "Cobra pose (Bhujangasana)",
-      "Superman hold",
-      "Towel pull simulation",
-      "Loaded bag bent-over row",
-      "Reverse dand (arching pushup style)"
-    ],
-    legs: [
-      "Hindu squats (Desi Baithak)",
-      "Wall sit",
-      "Forward and backward lunges",
-      "Step-ups on stairs",
-      "Jump squats"
-    ],
-    calves: [
-      "Standing calf raises",
-      "Single-leg calf raises",
-      "Step edge calf raises",
-      "Jumping jacks",
-      "Towel calf press (seated)"
-    ]
-  };
+  <script>
+    function showWorkouts(muscle) {
+      const workouts = {
+        chest: ["Desi Pushups", "Wide Grip Pushup", "Wall Push"],
+        abs: ["Dand Baithak", "Crunches", "Kapalbhati"],
+        back: ["Pullups", "Cobra Stretch", "Superman Hold"],
+        glutes: ["Squats", "Donkey Kicks", "Bridge Pose"]
+      };
 
-  const workoutList = document.getElementById("workoutList");
-  const spots = document.querySelectorAll(".spot");
-  const searchInput = document.getElementById("searchInput");
-
-  function showWorkouts(muscle) {
-    const list = workouts[muscle];
-    if (!list) {
-      workoutList.innerHTML = "<h2>No workouts found for this muscle.</h2>";
-      return;
+      const list = workouts[muscle] || ["No workouts found"];
+      const html = `<h2>${muscle.toUpperCase()} Workouts</h2><ul>` + list.map(w => `<li>${w}</li>`).join('') + `</ul>`;
+      document.getElementById("workoutList").innerHTML = html;
     }
-    let html = `<h2>${muscle.toUpperCase()} Workouts</h2><ul>`;
-    for (let w of list) {
-      html += `<li>${w}</li>`;
-    }
-    html += "</ul>";
-    workoutList.innerHTML = html;
-  }
-
-  spots.forEach(spot => {
-    spot.addEventListener("click", () => {
-      const muscle = spot.getAttribute("data-muscle");
-      showWorkouts(muscle);
-    });
-  });
-
-  searchInput.addEventListener("input", () => {
-    const query = searchInput.value.trim().toLowerCase();
-    if (!query) {
-      workoutList.innerHTML = "<h2>Click on a muscle spot or search above to see workouts</h2>";
-      return;
-    }
-    let foundMuscle = null;
-    for (let muscle in workouts) {
-      if (muscle.includes(query)) {
-        foundMuscle = muscle;
-        break;
-      }
-    }
-    if (foundMuscle) {
-      showWorkouts(foundMuscle);
-    } else {
-      workoutList.innerHTML = "<h2>No muscle found for your search.</h2>";
-    }
-  });
-</script>
+  </script>
 </body>
 </html>
-
-
