@@ -3,8 +3,82 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>DesiWorkout - Muscle Map</title>
+<title>DesiWorkout - Realistic Muscle Map</title>
 <link rel="stylesheet" href="style.css" />
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 20px;
+    background: #f9f9f9;
+    color: #222;
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  #darkModeToggle {
+    cursor: pointer;
+    background: #333;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  .body-map-container {
+    max-width: 500px;
+    margin: 20px auto;
+  }
+  svg {
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+  }
+  .muscle {
+    fill: #ddd;
+    stroke: #555;
+    stroke-width: 1.2;
+    transition: fill 0.3s;
+  }
+  .muscle:hover {
+    fill: #ff6347;
+  }
+  .selected {
+    fill: #ff4500 !important;
+  }
+  .workout-list {
+    max-width: 600px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px #ccc;
+    min-height: 160px;
+  }
+  .dark-mode {
+    background: #121212;
+    color: #eee;
+  }
+  .dark-mode .workout-list {
+    background: #222;
+    box-shadow: 0 0 15px #444;
+  }
+  .dark-mode #darkModeToggle {
+    background: #eee;
+    color: #121212;
+  }
+  .dark-mode .muscle {
+    fill: #444;
+    stroke: #ccc;
+  }
+  .dark-mode .muscle:hover {
+    fill: #ff6347;
+  }
+  .dark-mode .selected {
+    fill: #ff4500 !important;
+  }
+</style>
 </head>
 <body>
 <header>
@@ -12,31 +86,201 @@
   <button id="darkModeToggle">🌙 Dark Mode</button>
 </header>
 
-<section class="body-map-container">
-  <svg viewBox="0 0 500 1000" id="muscleMap" xmlns="http://www.w3.org/2000/svg" >
-    <!-- Front Body -->
-    <g id="frontBody">
-      <path id="neck" class="muscle" d="M240 50 C250 20, 270 20, 280 50 L280 100 L240 100 Z" />
-      <path id="shoulders" class="muscle" d="M190 100 L330 100 L320 150 L200 150 Z" />
-      <path id="biceps" class="muscle" d="M170 150 L200 150 L200 250 L170 250 Z" />
-      <path id="triceps" class="muscle" d="M320 150 L350 150 L350 250 L320 250 Z" />
-      <path id="chest" class="muscle" d="M200 150 L320 150 L320 300 L200 300 Z" />
-      <path id="upperChest" class="muscle" d="M210 120 L310 120 L310 150 L210 150 Z" />
-      <path id="abs" class="muscle" d="M220 300 L300 300 L300 450 L220 450 Z" />
-      <path id="obliques" class="muscle" d="M190 300 L220 300 L220 450 L190 450 Z M300 300 L330 300 L330 450 L300 450 Z" />
-      <path id="forearms" class="muscle" d="M150 250 L170 250 L170 350 L150 350 Z M350 250 L370 250 L370 350 L350 350 Z" />
-      <path id="glutes" class="muscle" d="M200 450 L320 450 L320 550 L200 550 Z" />
-      <path id="legs" class="muscle" d="M200 550 L320 550 L320 850 L200 850 Z" />
-      <path id="calves" class="muscle" d="M170 850 L200 850 L200 950 L170 950 Z M320 850 L350 850 L350 950 L320 950 Z" />
-    </g>
+<div class="body-map-container">
+  <svg id="muscleMap" viewBox="0 0 600 1200" xmlns="http://www.w3.org/2000/svg" aria-label="Muscle Map" role="img">
+    <!-- Head -->
+    <ellipse id="neck" class="muscle" cx="300" cy="120" rx="40" ry="50" />
+    <circle id="head" class="muscle" cx="300" cy="50" r="50" />
+    
+    <!-- Shoulders -->
+    <path id="shoulders" class="muscle" d="M180 180 C230 130, 370 130, 420 180 L420 250 L180 250 Z" />
+    
+    <!-- Chest -->
+    <path id="chest" class="muscle" d="M220 250 C250 350, 350 350, 380 250 L380 380 L220 380 Z" />
+    
+    <!-- Upper Chest -->
+    <path id="upperChest" class="muscle" d="M230 230 C270 280, 330 280, 370 230 L370 250 L230 250 Z" />
+    
+    <!-- Biceps Left -->
+    <ellipse id="biceps" class="muscle" cx="170" cy="320" rx="40" ry="80" />
+    <!-- Triceps Right -->
+    <ellipse id="triceps" class="muscle" cx="430" cy="320" rx="40" ry="80" />
+    
+    <!-- Forearms Left -->
+    <rect id="forearms" class="muscle" x="130" y="380" width="80" height="150" rx="30" ry="40"/>
+    <!-- Forearms Right -->
+    <rect id="forearmsRight" class="muscle" x="390" y="380" width="80" height="150" rx="30" ry="40"/>
+    
+    <!-- Abs -->
+    <rect id="abs" class="muscle" x="250" y="380" width="100" height="160" rx="35" ry="35"/>
+    
+    <!-- Obliques Left -->
+    <path id="obliques" class="muscle" d="M210 380 L250 450 L210 540 L180 500 Z" />
+    <!-- Obliques Right -->
+    <path id="obliquesRight" class="muscle" d="M450 380 L410 450 L450 540 L480 500 Z" />
+    
+    <!-- Glutes -->
+    <ellipse id="glutes" class="muscle" cx="300" cy="600" rx="90" ry="70" />
+    
+    <!-- Legs Left -->
+    <rect id="legs" class="muscle" x="210" y="670" width="70" height="320" rx="40" ry="40" />
+    <!-- Legs Right -->
+    <rect id="legsRight" class="muscle" x="320" y="670" width="70" height="320" rx="40" ry="40" />
+    
+    <!-- Calves Left -->
+    <ellipse id="calves" class="muscle" cx="240" cy="1000" rx="40" ry="60" />
+    <!-- Calves Right -->
+    <ellipse id="calvesRight" class="muscle" cx="350" cy="1000" rx="40" ry="60" />
   </svg>
-</section>
+</div>
 
 <section id="workoutList" class="workout-list">
   <h2>Click on any muscle above to see workouts</h2>
 </section>
 
-<script src="script.js"></script>
+<script>
+  const workouts = {
+    neck: [
+      "Neck rotations",
+      "Front and back neck resistance using hands",
+      "Side neck resistance using hands",
+      "Towel neck pulls",
+      "Pillow neck hold (lying down with a pillow under head)"
+    ],
+    shoulders: [
+      "Wide-arm desi pushups (Hanuman Dand)",
+      "Traditional shoulder-focused dand",
+      "Bag front raises",
+      "Water bottle lateral raises",
+      "Wall handstand hold"
+    ],
+    biceps: [
+      "Reverse-hand pushups",
+      "Towel bucket curls",
+      "Chin-ups (if you have a bar)",
+      "Heavy bottle curls",
+      "Brick hammer curls"
+    ],
+    triceps: [
+      "Diamond pushups",
+      "Chair or table dips",
+      "Overhead towel extension with weight",
+      "Close-grip pushups",
+      "One-arm wall tricep push"
+    ],
+    chest: [
+      "Normal desi pushups",
+      "Wide grip pushups",
+      "Elevated pushups (feet up)",
+      "Decline pushups (hands elevated)",
+      "Super slow pushups"
+    ],
+    upperChest: [
+      "Incline pushups",
+      "Wall pushups",
+      "Dumbbell front raises",
+      "Pike pushups",
+      "Clap pushups"
+    ],
+    abs: [
+      "Situps",
+      "Leg raises",
+      "Mountain climbers",
+      "Bicycle crunches",
+      "Plank"
+    ],
+    obliques: [
+      "Side planks",
+      "Russian twists",
+      "Side crunches",
+      "Heel taps",
+      "Woodchoppers"
+    ],
+    forearms: [
+      "Bucket hold",
+      "Wet towel twist",
+      "Brick wrist curls",
+      "Wrist pushups",
+      "Hand grip using towel or ball"
+    ],
+    back: [
+      "Cobra pose (Bhujangasana)",
+      "Superman hold",
+      "Towel pull simulation",
+      "Loaded bag bent-over row",
+      "Reverse dand (arching pushup style)"
+    ],
+    lowerBack: [
+      "Bird-dog",
+      "Bridge pose",
+      "Superman raise",
+      "Back extensions",
+      "Cat-cow stretch"
+    ],
+    glutes: [
+      "Glute bridges",
+      "Squats",
+      "Lunges",
+      "Donkey kicks",
+      "Step-ups"
+    ],
+    legs: [
+      "Hindu squats (Desi Baithak)",
+      "Wall sit",
+      "Forward and backward lunges",
+      "Step-ups on stairs",
+      "Jump squats"
+    ],
+    calves: [
+      "Standing calf raises",
+      "Single-leg calf raises",
+      "Step edge calf raises",
+      "Jumping jacks",
+      "Towel calf press (seated)"
+    ]
+  };
+
+  const workoutList = document.getElementById("workoutList");
+  const muscles = document.querySelectorAll(".muscle");
+  let selectedMuscle = null;
+
+  function showWorkouts(muscle) {
+    if (selectedMuscle) {
+      selectedMuscle.classList.remove("selected");
+    }
+    selectedMuscle = document.getElementById(muscle);
+    selectedMuscle.classList.add("selected");
+
+    const list = workouts[muscle];
+    if (!list) {
+      workoutList.innerHTML = "<h2>No workouts found for this muscle.</h2>";
+      return;
+    }
+
+    let html = `<h2>${muscle.replace(/([A-Z])/g, ' $1').toUpperCase()} Workouts</h2><ul>`;
+    for (let w of list) {
+      html += `<li>${w}</li>`;
+    }
+    html += "</ul>";
+    workoutList.innerHTML = html;
+  }
+
+  muscles.forEach(muscle => {
+    muscle.addEventListener("click", () => {
+      showWorkouts(muscle.id);
+    });
+  });
+
+  const darkModeToggle = document.getElementById("darkModeToggle");
+  darkModeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    if(document.body.classList.contains("dark-mode")) {
+      darkModeToggle.textContent = "☀️ Light Mode";
+    } else {
+      darkModeToggle.textContent = "🌙 Dark Mode";
+    }
+  });
+</script>
 </body>
 </html>
 
