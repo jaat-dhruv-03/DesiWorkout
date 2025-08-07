@@ -1,80 +1,134 @@
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #f5f5f5;
-  margin: 20px;
-  color: #222;
-  transition: background-color 0.3s, color 0.3s;
+const workouts = {
+  neck: [
+    "Neck rotations",
+    "Front and back neck resistance using hands",
+    "Side neck resistance using hands",
+    "Towel neck pulls",
+    "Pillow neck hold (lying down with a pillow under head)"
+  ],
+  shoulders: [
+    "Wide-arm desi pushups (Hanuman Dand)",
+    "Traditional shoulder-focused dand",
+    "Bag front raises",
+    "Water bottle lateral raises",
+    "Wall handstand hold"
+  ],
+  biceps: [
+    "Reverse-hand pushups",
+    "Towel bucket curls",
+    "Chin-ups (if you have a bar)",
+    "Heavy bottle curls",
+    "Brick hammer curls"
+  ],
+  triceps: [
+    "Diamond pushups",
+    "Chair or table dips",
+    "Overhead towel extension with weight",
+    "Close-grip pushups",
+    "One-arm wall tricep push"
+  ],
+  chest: [
+    "Normal desi pushups",
+    "Wide grip pushups",
+    "Elevated pushups (feet up)",
+    "Decline pushups (hands elevated)",
+    "Super slow pushups"
+  ],
+  upperChest: [
+    "Incline pushups",
+    "Wall pushups",
+    "Dumbbell front raises",
+    "Pike pushups",
+    "Clap pushups"
+  ],
+  abs: [
+    "Situps",
+    "Leg raises",
+    "Mountain climbers",
+    "Bicycle crunches",
+    "Plank"
+  ],
+  obliques: [
+    "Side planks",
+    "Russian twists",
+    "Side crunches",
+    "Heel taps",
+    "Woodchoppers"
+  ],
+  forearms: [
+    "Bucket hold",
+    "Wet towel twist",
+    "Brick wrist curls",
+    "Wrist pushups",
+    "Hand grip using towel or ball"
+  ],
+  back: [
+    "Cobra pose (Bhujangasana)",
+    "Superman hold",
+    "Towel pull simulation",
+    "Loaded bag bent-over row",
+    "Reverse dand (arching pushup style)"
+  ],
+  lowerBack: [
+    "Bird-dog",
+    "Bridge pose",
+    "Superman raise",
+    "Back extensions",
+    "Cat-cow stretch"
+  ],
+  glutes: [
+    "Glute bridges",
+    "Squats",
+    "Lunges",
+    "Donkey kicks",
+    "Step-ups"
+  ],
+  legs: [
+    "Hindu squats (Desi Baithak)",
+    "Wall sit",
+    "Forward and backward lunges",
+    "Step-ups on stairs",
+    "Jump squats"
+  ],
+  calves: [
+    "Standing calf raises",
+    "Single-leg calf raises",
+    "Step edge calf raises",
+    "Jumping jacks",
+    "Towel calf press (seated)"
+  ]
+};
+
+const workoutList = document.getElementById("workoutList");
+const muscles = document.querySelectorAll(".muscle");
+const darkModeToggle = document.getElementById("darkModeToggle");
+
+function showWorkouts(muscle) {
+  const list = workouts[muscle];
+  if (!list) {
+    workoutList.innerHTML = "<h2>No workouts found for this muscle.</h2>";
+    return;
+  }
+
+  let html = `<h2>${muscle.replace(/([A-Z])/g, ' $1').toUpperCase()} Workouts</h2><ul>`;
+  for (let w of list) {
+    html += `<li>${w}</li>`;
+  }
+  html += "</ul>";
+  workoutList.innerHTML = html;
 }
 
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
+muscles.forEach(muscle => {
+  muscle.addEventListener("click", () => {
+    showWorkouts(muscle.id);
+  });
+});
 
-button#darkModeToggle {
-  cursor: pointer;
-  background: #444;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 8px 12px;
-  font-size: 16px;
-}
-
-.body-map-container {
-  max-width: 400px;
-  margin: auto;
-}
-
-#muscleMap {
-  width: 100%;
-  height: auto;
-}
-
-.muscle {
-  fill: #ddd;
-  stroke: #444;
-  stroke-width: 2;
-  cursor: pointer;
-  transition: fill 0.3s;
-}
-
-.muscle:hover {
-  fill: #ff6f61;
-}
-
-.workout-list {
-  max-width: 600px;
-  margin: 20px auto;
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px #ccc;
-  min-height: 150px;
-}
-
-.dark-mode {
-  background-color: #121212;
-  color: #ddd;
-}
-
-.dark-mode button#darkModeToggle {
-  background: #ddd;
-  color: #121212;
-}
-
-.dark-mode .muscle {
-  fill: #555;
-  stroke: #aaa;
-}
-
-.dark-mode .muscle:hover {
-  fill: #ff6655;
-}
-
-.dark-mode .workout-list {
-  background: #222;
-  box-shadow: 0 0 10px rgba(255 255 255, 0.1);
-}
+darkModeToggle.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
+  if(document.body.classList.contains("dark-mode")) {
+    darkModeToggle.textContent = "☀️ Light Mode";
+  } else {
+    darkModeToggle.textContent = "🌙 Dark Mode";
+  }
+});
